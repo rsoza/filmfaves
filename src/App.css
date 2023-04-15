@@ -13,6 +13,11 @@
   }
 }
 
+.active {
+  color: olivedrab;
+  border-bottom: 2px solid olivedrab;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -35,4 +40,9 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.layout {
+  background-color: rgb(244, 241, 234);
+  padding: 100px;
 }

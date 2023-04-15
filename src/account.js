@@ -1,16 +1,18 @@
 import React from "react";
 import Navbar from "./navbar";
-  
+import "./App.css";
+
 const Account = () => {
   return (
-    <div>
-        <Navbar />
-      <h1>
-        GeeksforGeeks is a Computer 
-        Science portal for geeks.
-      </h1>
-    </div>
+    <>
+      <Navbar />
+      <div className="layout">
+        <div className="App">
+          <h1>profile settings</h1>
+        </div>
+      </div>
+    </>
   );
 };
-  
+
 export default Account;

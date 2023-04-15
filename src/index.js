@@ -8,6 +8,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 import MyMovies from "./myMovies";
 import Account from "./account";
 import App from "./App";
+import Tables from "./tables";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -18,6 +19,8 @@ root.render(
           <Route exact path="/" element={<App />} />
           <Route exact path="/mymovies" element={<MyMovies />} />
           <Route exact path="/account" element={<Account />} />
+          <Route exact path="/tables" element={<Tables />} />
+          {/* <Route exact path="/review" element={<review />} /> */}
         </Routes>
       </Router>
     </React.StrictMode>
