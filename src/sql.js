@@ -191,8 +191,13 @@ db.run(`
 //   });
 // });
 
+sql = `DELETE FROM watchlist WHERE watchlist_id=1`;
+db.all(sql, [], (error, rows) => {
+  if (error) return console.error(error.message);
+  console.log(rows);
+});
 // display data
-sql = `SELECT * FROM movies`;
+sql = `SELECT * FROM watchlist`;
 db.all(sql, [], (error, rows) => {
   if (error) return console.error(error.message);
   console.log(rows);

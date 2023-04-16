@@ -58,3 +58,14 @@ export async function getFullWatchlist() {
     return [];
   }
 };
+
+export const deleteMovieFromWatchlist = async (id) => {
+  try {
+    const response = await axios.delete(`http://localhost:3010/api/watchlist/${id}`);
+    console.log(response)
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};

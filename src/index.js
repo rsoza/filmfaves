@@ -5,7 +5,7 @@ import "./index.css";
 import { ChakraProvider } from "@chakra-ui/react";
 
 // pages
-import MyMovies from "./myMovies";
+import MyMovies from "./watchlist";
 import Account from "./account";
 import App from "./App";
 import Tables from "./tables";
@@ -20,7 +20,6 @@ root.render(
           <Route exact path="/mymovies" element={<MyMovies />} />
           <Route exact path="/account" element={<Account />} />
           <Route exact path="/tables" element={<Tables />} />
-          {/* <Route exact path="/review" element={<review />} /> */}
         </Routes>
       </Router>
     </React.StrictMode>

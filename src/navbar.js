@@ -37,7 +37,7 @@ function Navbar() {
     <Box
       as="section"
       position="fixed"
-      zIndex="9999"
+      zIndex="1"
       bg="rgb(244, 241, 234)"
       width="100%"
     >

@@ -267,9 +267,9 @@ app.put("/api/watchlist/:id", (req, res) => {
 });
 
 // Delete a watchlist item
-app.delete("/api/watchlist/:id", (req, res) => {
+app.delete('/api/watchlist/:id', (req, res) => {
   const { id } = req.params;
-  const sql = "DELETE FROM watchlist WHERE user_id = ?";
+  const sql = "DELETE FROM watchlist WHERE watchlist_id = ?";
   db.run(sql, [id], (err) => {
     if (err) {
       res
