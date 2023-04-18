@@ -19,7 +19,6 @@ function Review() {
     async function fetchTables() {
       const reviewsTable = await getFullReviews();
       setReviews(reviewsTable);
-      console.log(reviewsTable);
     }
 
     fetchTables();
@@ -74,6 +73,7 @@ function Review() {
                 shadow='lg' 
                 fontFamily="Lato"
                 fontWeight='medium'
+                mt='5'
                 >
                   Add to watchlist
                 </Button>

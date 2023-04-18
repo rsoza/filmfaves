@@ -1,8 +1,7 @@
 import React from "react";
 import "./App.js";
 import Navbar from "./navbar.js";
-import WantMovies from "./components/wantMovies.js";
-import Watched from "./components/watched.js";
+import SetWatchlist from "./components/setwatchlist.js";
 import {
   Box,
   Accordion,
@@ -40,7 +39,7 @@ function MyMovies() {
           <Flex>
             <Spacer />
             <Box>
-              <IconButton icon={<AddIcon />} onClick={onOpen} />
+              <IconButton variant='ghost' icon={<AddIcon />} onClick={onOpen} />
               <Modal isCentered isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay
                   bg="none"
@@ -65,7 +64,7 @@ function MyMovies() {
             </Box>
           </Flex>
           <Accordion allowToggle>
-            <AccordionItem isFocusable='true'>
+            <AccordionItem>
               <h2>
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left">
@@ -75,11 +74,11 @@ function MyMovies() {
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
-                <WantMovies />
+              <SetWatchlist setWatched={1} />
               </AccordionPanel>
             </AccordionItem>
 
-            <AccordionItem isFocusable='true'>
+            <AccordionItem>
               <h2>
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left">
@@ -89,7 +88,7 @@ function MyMovies() {
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
-                <Watched />
+                <SetWatchlist setWatched={0} />
               </AccordionPanel>
             </AccordionItem>
           </Accordion>

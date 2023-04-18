@@ -16,7 +16,7 @@ import {
 import { getFullWatchlist, deleteMovieFromWatchlist, updateWatchlist } from "./axios";
 import { ChevronDownIcon, CheckIcon } from "@chakra-ui/icons";
 
-const WantMovies = () => {
+const SetWatchlist = ({setWatched}) => {
   const [watchlist, setWatchlist] = useState([]);
 
   const handleRemoveFromWatchlist = async (id) => {
@@ -30,7 +30,7 @@ const WantMovies = () => {
 
   const handleWatchlistUpdate = async (id, user_id, movie_id) => {
     try{
-      await updateWatchlist(id,user_id,movie_id, 1);
+      await updateWatchlist(id,user_id,movie_id, setWatched);
     } catch (error) {
       console.log(error);
     }
@@ -46,7 +46,7 @@ const WantMovies = () => {
     fetchTables();
   }, [watchlist]);
   
-  const filteredWatchlist = watchlist.filter(element => element.watched === 0 && element.user_id === 1);
+  const filteredWatchlist = watchlist.filter(element => element.watched === setWatched && element.user_id === 1);
 
   return (
     <>
@@ -125,4 +125,4 @@ const WantMovies = () => {
   );
 };
 
-export default WantMovies;
+export default SetWatchlist;
