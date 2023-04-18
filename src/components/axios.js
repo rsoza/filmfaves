@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export async function getUsers() {
   try {
-    const response = await axios.get('http://localhost:3010/api/users');
+    const response = await axios.get('http://localhost:8080/api/users');
     return response.data;
   } catch (error) {
     console.error(error);
@@ -12,7 +12,7 @@ export async function getUsers() {
 
 export async function getMovies() {
   try {
-    const response = await axios.get('http://localhost:3010/api/movies');
+    const response = await axios.get('http://localhost:8080/api/movies');
     return response.data;
   } catch (error) {
     console.error(error);
@@ -21,7 +21,7 @@ export async function getMovies() {
 };
 export async function getReviews() {
   try {
-    const response = await axios.get('http://localhost:3010/api/reviews');
+    const response = await axios.get('http://localhost:8080/api/reviews');
     return response.data;
   } catch (error) {
     console.error(error);
@@ -31,7 +31,7 @@ export async function getReviews() {
 
 export async function getWatchlist() {
   try {
-    const response = await axios.get('http://localhost:3010/api/watchlist');
+    const response = await axios.get('http://localhost:8080/api/watchlist');
     return response.data;
   } catch (error) {
     console.error(error);
@@ -41,7 +41,7 @@ export async function getWatchlist() {
 
 export async function getFullReviews() {
   try {
-    const response = await axios.get('http://localhost:3010/api/fullReviewTable');
+    const response = await axios.get('http://localhost:8080/api/fullReviewTable');
     return response.data;
   } catch (error) {
     console.error(error);
@@ -51,7 +51,7 @@ export async function getFullReviews() {
 
 export async function getFullWatchlist() {
   try {
-    const response = await axios.get('http://localhost:3010/api/fullWatchlistTable');
+    const response = await axios.get('http://localhost:8080/api/fullWatchlistTable');
     return response.data;
   } catch (error) {
     console.error(error);
@@ -61,7 +61,7 @@ export async function getFullWatchlist() {
 
 export const deleteMovieFromWatchlist = async (id) => {
   try {
-    const response = await axios.delete(`http://localhost:3010/api/watchlist/${id}`);
+    const response = await axios.delete(`http://localhost:8080/api/watchlist/${id}`);
     console.log(response)
     return response.data;
   } catch (error) {
@@ -72,7 +72,7 @@ export const deleteMovieFromWatchlist = async (id) => {
 
 export const updateWatchlist = async (id, user_id, movie_id, watched) => {
   try {
-    const response = await axios.put(`http://localhost:3010/api/watchlist/${id}`,{
+    const response = await axios.put(`http://localhost:8080/api/watchlist/${id}`,{
       user_id,
       movie_id,
       watched

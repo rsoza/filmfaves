@@ -4,7 +4,7 @@ const sqlite = require("sqlite3").verbose();
 
 // connection between database and react
 const app = express();
-const port = 3010;
+const port = 8080;
 
 // allows fetch
 var cors = require("cors");
