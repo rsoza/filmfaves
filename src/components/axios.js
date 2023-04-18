@@ -69,3 +69,18 @@ export const deleteMovieFromWatchlist = async (id) => {
     return [];
   }
 };
+
+export const updateWatchlist = async (id, user_id, movie_id, watched) => {
+  try {
+    const response = await axios.put(`http://localhost:3010/api/watchlist/${id}`,{
+      user_id,
+      movie_id,
+      watched
+    });
+    console.log(response)
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};

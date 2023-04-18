@@ -8,6 +8,7 @@ import {
   Td,
   TableContainer,
   Container,
+  Heading
 } from "@chakra-ui/react";
 import Navbar from "./navbar";
 
@@ -48,19 +49,30 @@ function Tables() {
       <Navbar />
       <div className="layout">
         <div>
-          <Container maxW="2xl" bg="white" shadow="lg" centerContent>
+          <Container 
+          maxW="2xl" 
+          bg="white" 
+          shadow="lg" 
+          >
             <TableContainer>
-              USER TABLE
-              <Table size="sm" overflowX="auto">
-                <Thead>
-                  <Tr>
+              <Heading 
+              textAlign='center'
+              fontSize='24' 
+              fontFamily='Helvetica'
+              pt='10'
+              >
+                USER TABLE
+              </Heading>
+              <Table size="sm" overflowX="auto" >
+                <Thead >
+                  <Tr fontFamily='Helvetica'>
                     <Th>user_id</Th>
                     <Th>Firstname</Th>
                     <Th>Lastname</Th>
                     <Th>Location</Th>
                   </Tr>
                 </Thead>
-                <Tbody>
+                <Tbody fontFamily='Helvetica'>
                   {users.map((user) => (
                     <Tr>
                       <Td>{user.user_id}</Td>
@@ -73,7 +85,14 @@ function Tables() {
               </Table>
             </TableContainer>
             <TableContainer>
+            <Heading 
+              textAlign='center'
+              fontSize='24' 
+              fontFamily='Helvetica'
+              pt='10'
+              >
               MOVIES TABLE
+              </Heading>
               <Table size="sm" overflowX="auto">
                 <Thead>
                   <Tr>
@@ -100,7 +119,14 @@ function Tables() {
               </Table>
             </TableContainer>
             <TableContainer>
+            <Heading 
+              textAlign='center'
+              fontSize='24' 
+              fontFamily='Helvetica'
+              pt='10'
+              >
               REVIEWS TABLE
+              </Heading>
               <Table size="sm" overflowX="auto">
                 <Thead>
                   <Tr>
@@ -125,13 +151,21 @@ function Tables() {
               </Table>
             </TableContainer>
             <TableContainer>
+            <Heading 
+              textAlign='center'
+              fontSize='24' 
+              fontFamily='Helvetica'
+              pt='10'
+              >
               WATCHLIST TABLE
+              </Heading>
               <Table size="sm">
                 <Thead>
                   <Tr>
                     <Th>watchlist_id</Th>
                     <Th>user_id</Th>
                     <Th>movie_id</Th>
+                    <Th>watched</Th>
                   </Tr>
                 </Thead>
                 <Tbody>
@@ -140,6 +174,7 @@ function Tables() {
                       <Td>{watch.watchlist_id}</Td>
                       <Td>{watch.user_id}</Td>
                       <Td>{watch.movie_id}</Td>
+                      <Td>{watch.watched}</Td>
                     </Tr>
                   ))}
                 </Tbody>

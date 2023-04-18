@@ -65,7 +65,7 @@ function MyMovies() {
             </Box>
           </Flex>
           <Accordion allowToggle>
-            <AccordionItem>
+            <AccordionItem isFocusable='true'>
               <h2>
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left">
@@ -79,7 +79,7 @@ function MyMovies() {
               </AccordionPanel>
             </AccordionItem>
 
-            <AccordionItem>
+            <AccordionItem isFocusable='true'>
               <h2>
                 <AccordionButton>
                   <Box as="span" flex="1" textAlign="left">

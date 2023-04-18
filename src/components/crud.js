@@ -232,13 +232,13 @@ app.get("/api/watchlist", (req, res) => {
 
 // Add a new watchlist item
 app.post("/api/watchlist", (req, res) => {
-  const [user_id, movie_id] = req.body;
-  if (!user_id || !movie_id) {
+  const [user_id, movie_id, watched] = req.body;
+  if (!user_id || !movie_id || !watched) {
     res.status(400).json({ error: "User and movie ids are required." });
     return;
   }
-  const sql = "INSERT INTO watchlist (user_id, movie_id) VALUES (?, ?)";
-  db.run(sql, [user_id, movie_id], (err) => {
+  const sql = "INSERT INTO watchlist (user_id, movie_id, watched) VALUES (?, ?, ?)";
+  db.run(sql, [user_id, movie_id, watched], (err) => {
     if (err) {
       res
         .status(500)
@@ -252,10 +252,10 @@ app.post("/api/watchlist", (req, res) => {
 // Update a watchlist item
 app.put("/api/watchlist/:id", (req, res) => {
   const { id } = req.params;
-  const { user_id, movie_id } = req.body;
+  const { user_id, movie_id, watched } = req.body;
   const sql =
-    "UPDATE watchlist SET user_id = ?, movie_id = ? WHERE user_id = ?";
-  db.run(sql, [user_id, movie_id, id], (err) => {
+    "UPDATE watchlist SET user_id = ?, movie_id = ?, watched = ? WHERE watchlist_id = ?";
+  db.run(sql, [user_id, movie_id, watched, id], (err) => {
     if (err) {
       res
         .status(500)
