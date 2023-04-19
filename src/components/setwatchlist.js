@@ -30,7 +30,7 @@ const SetWatchlist = ({setWatched}) => {
 
   const handleWatchlistUpdate = async (id, user_id, movie_id) => {
     try{
-      await updateWatchlist(id,user_id,movie_id, setWatched);
+      await updateWatchlist(id,user_id,movie_id, !setWatched);
     } catch (error) {
       console.log(error);
     }
@@ -91,7 +91,7 @@ const SetWatchlist = ({setWatched}) => {
                     >
                       <span>
                         <CheckIcon color="olivedrab" mr="3" />
-                        Watched
+                       {setWatched ? 'Want to watch' :'Watched'}
                       </span>
                     </MenuButton>
                     <MenuList>
@@ -102,7 +102,9 @@ const SetWatchlist = ({setWatched}) => {
                           watching.user_id,
                           watching.movie_id);
                       }}>
-                        <span>Want to watch</span>
+                        <span>
+                        {setWatched ? 'Watched': 'Want to watch'}
+                        </span>
                       </MenuItem>
                       <MenuItem
                         minH="40px"
@@ -119,7 +121,7 @@ const SetWatchlist = ({setWatched}) => {
             </Card>
           </Container>
         ))) : (
-          <Heading>(0) items watched</Heading>
+          <Heading>(0) items listed</Heading>
         )}
     </>
   );

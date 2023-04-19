@@ -84,3 +84,18 @@ export const updateWatchlist = async (id, user_id, movie_id, watched) => {
     return [];
   }
 };
+
+export const postNewWatchlist = async (user_id, movie_id, watched) => {
+  try {
+    const response = await axios.post(`http://localhost:8080/api/watchlist`,{
+      user_id,
+      movie_id,
+      watched
+    });
+    console.log(response)
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};

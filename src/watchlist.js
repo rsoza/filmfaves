@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState} from "react";
 import "./App.js";
 import Navbar from "./navbar.js";
 import SetWatchlist from "./components/setwatchlist.js";
@@ -23,13 +23,44 @@ import {
   Button,
   FormControl,
   FormLabel,
-  Input
+  Input,
+  filter
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { useDisclosure } from "@chakra-ui/react";
+import { postNewWatchlist, getMovies } from "./components/axios.js";
 
 function MyMovies() {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [movieList, setMovieList] = useState([]);
+  const [inputVal, setInputVal] = useState('');
+
+  const handlePostWatchlist = async (user_id, movie_id, watched) => {
+    try{
+      await postNewWatchlist(user_id,movie_id, watched);
+    } catch (error) {
+      console.log(error);
+    }
+    console.log("Added watchlist");
+  };
+
+
+  const handleAutoComplete = async (e) => {
+    const query = e.target.value;
+
+    if (query) {
+      const response = await getMovies();
+      const filterMovie = response.filter(element => element.title.toLowerCase().includes(query.toLowerCase()));
+      setMovieList(filterMovie);
+    } else {
+      setMovieList([]);
+    }
+
+
+  }
+  
+
+
 
   return (
     <>
@@ -53,7 +84,16 @@ function MyMovies() {
                   <ModalBody>
                     <FormControl isRequired>
                       <FormLabel>Movie</FormLabel>
-                      <Input placeholder="Type Movie" autoComplete='on'/>
+                      <Input
+                      type="text"
+                      placeholder="Type Movie"
+                      onChange={handleAutoComplete}
+                      />
+                      {
+                        movieList.map(movie => (
+                          <li>{movie.title}</li>
+                        ))
+                      }
                     </FormControl>
                   </ModalBody>
                   <ModalFooter>
