@@ -77,10 +77,13 @@ const SetWatchlist = ({setWatched}) => {
                     {watching.title}
                   </Heading>
                   <Text fontSize="14" color="grey" fontFamily="Helvetica">
-                    Directed by {watching.director}
+                    Genre: {watching.genre}
                   </Text>
                   <Text fontSize="14" color="grey" fontFamily="Helvetica">
-                    Starring {watching.star_actors}
+                    Director: {watching.director}
+                  </Text>
+                  <Text fontSize="14" color="grey" fontFamily="Helvetica">
+                    Cast: {watching.star_actors}
                   </Text>
                   <Menu>
                     <MenuButton

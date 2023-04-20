@@ -98,6 +98,8 @@ db.run(`
     watched BOOLEAN NOT NULL DEFAULT false,
     UNIQUE(user_id,movie_id));
     `);
+
+  db.run("INSERT INTO watchlist (user_id, movie_id, watched) VALUES (1, 10,0);");
 // db.run(`
 //     ALTER TABLE watchlist ADD COLUMN watched BOOLEAN NOT NULL DEFAULT false;
 //   `);

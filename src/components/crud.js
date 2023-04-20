@@ -1,3 +1,5 @@
+
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const sqlite = require("sqlite3").verbose();
@@ -87,7 +89,7 @@ app.delete("/api/users/:id", (req, res) => {
 
 // Get all movies
 app.get("/api/movies", (req, res) => {
-  const sql = "SELECT * FROM movies";
+  const sql = "SELECT * FROM movies ORDER BY title ASC";
   db.all(sql, [], (err, rows) => {
     if (err) {
       res.status(500).json({ error: "Error retrieving movies from database." });
@@ -232,8 +234,9 @@ app.get("/api/watchlist", (req, res) => {
 
 // Add a new watchlist item
 app.post("/api/watchlist", (req, res) => {
-  const [user_id, movie_id, watched] = req.body;
-  if (!user_id || !movie_id || !watched) {
+  const {user_id, movie_id, watched} = req.body;
+
+  if (!user_id || !movie_id) {
     res.status(400).json({ error: "User and movie ids are required." });
     return;
   }
