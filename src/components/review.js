@@ -9,6 +9,7 @@ import {
   Heading,
   Text,
   Button,
+  Flex
 } from "@chakra-ui/react";
 import { getFullReviews } from "./axios";
 
@@ -30,13 +31,16 @@ function Review() {
         <Container p="2">
           <Card
             direction={{ base: "column", sm: "row" }}
-            overflow="hidden"
+            overflowY="hidden"
             variant="outline"
             size="md"
             pt="2"
             pl="2"
             textAlign={["left"]}
-            shadow="lg"
+            shadow="md"
+            height="300px"
+            width="400px"
+            borderColor="#D8D8D8"
           >
             <Stack>
               <Stack flexDirection="row">
@@ -74,7 +78,7 @@ function Review() {
               <CardFooter>
                 <Text
                   fontWeight="semibold"
-                  fonSize="12"
+                  fontSize="12"
                   color="olivedrab"
                   fontFamily="Helvetica"
                 >
@@ -126,16 +130,7 @@ function Review() {
                 >
                   Add to watchlist
                 </Button>
-              </CardBody>
-              <Text
-                fontSize="14"
-                fontWeight="normal"
-                color="grey"
-                pt="2"
-                fontFamily="Helvetica"
-              >
-                Review:{" "}
-              </Text>
+                <Flex pt="2">
               <Text
                 fontSize="14"
                 fontWeight="normal"
@@ -143,9 +138,11 @@ function Review() {
                 color="grey"
                 pb="4"
                 fontFamily="Helvetica"
-              >
-                {review.review_comment}
+                >
+                "{review.review_comment}"
               </Text>
+                </Flex>
+              </CardBody>
             </Stack>
           </Card>
         </Container>

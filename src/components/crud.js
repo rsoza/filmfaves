@@ -170,9 +170,28 @@ app.get("/api/reviews", (req, res) => {
   });
 });
 
+// Get all bobs reviews
+app.get("/api/bobsreviews", (req, res) => {
+  const sql = `SELECT * 
+  FROM reviews 
+  JOIN movies ON movies.movie_id = reviews.movie_id 
+  JOIN users ON users.user_id = reviews.user_id
+  WHERE reviews.user_id = 1
+  ORDER BY reviews.review_id DESC`;
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      res
+        .status(500)
+        .json({ error: "Error retrieving reviews from database." });
+    } else {
+      res.json(rows);
+    }
+  });
+});
+
 // Add a new review
 app.post("/api/reviews", (req, res) => {
-  const [user_id, movie_id, rating, review_comment] = req.body;
+  const {user_id, movie_id, rating, review_comment} = req.body;
   if (!user_id || !movie_id || !rating || !review_comment) {
     return;
   }
@@ -182,7 +201,7 @@ app.post("/api/reviews", (req, res) => {
     if (err) {
       res.status(500).json({ error: "Error adding review to database." });
     } else {
-      res.json({ message: "User added successfully." });
+      res.json({ message: "Review added successfully." });
     }
   });
 });
@@ -192,7 +211,7 @@ app.put("/api/reviews/:id", (req, res) => {
   const { id } = req.params;
   const { user_id, movie_id, rating, review_comment } = req.body;
   const sql =
-    "UPDATE reviews SET user_id = ?, movie_id = ?, rating = ?,  review_comment = ? WHERE user_id = ?";
+    "UPDATE reviews SET user_id = ?, movie_id = ?, rating = ?,  review_comment = ? WHERE review_id = ?";
   db.run(sql, [user_id, movie_id, rating, review_comment, id], (err) => {
     if (err) {
       res.status(500).json({ error: "Error updating review in database." });
@@ -290,7 +309,9 @@ app.get("/api/fullReviewTable", (req, res) => {
   `SELECT * 
   FROM reviews 
   JOIN movies ON movies.movie_id = reviews.movie_id 
-  JOIN users ON users.user_id = reviews.user_id`;
+  JOIN users ON users.user_id = reviews.user_id
+  WHERE reviews.user_id != 1
+  ORDER BY reviews.review_id DESC`;
   db.all(sql, [], (err, rows) => {
     if (err) {
       res

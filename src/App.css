@@ -13,6 +13,7 @@
   }
 }
 
+
 .active {
   color: olivedrab;
   border-bottom: 2px solid olivedrab;
@@ -44,5 +45,4 @@
 
 .layout {
   background-color: rgb(244, 241, 234);
-  padding: 100px;
 }

@@ -85,11 +85,11 @@ function MyMovies() {
                 <ModalOverlay
                   bg="none"
                   backdropFilter="auto"
-                  backdropInvert="20%"
+                  backdropInvert="25%"
                   backdropBlur="2px"
                 />
                 <ModalContent>
-                  <ModalHeader>Add to list</ModalHeader>
+                  <ModalHeader>Add to watchlist</ModalHeader>
                   <ModalCloseButton />
                   <ModalBody>
                     <Select

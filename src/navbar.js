@@ -1,19 +1,32 @@
 import {
   Box,
-  Container,
   Button,
-  Center,
-  Avatar,
   Heading,
+  useDisclosure,
+  Drawer,
+  DrawerBody,
+  DrawerHeader,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerCloseButton,
+  Center,
+  Text,
+  Input,
+  Flex,
+  InputGroup,
+  InputRightElement
 } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./App.css";
-import { ChevronUpIcon } from "@chakra-ui/icons";
+import { ChevronUpIcon, SearchIcon, BellIcon, EmailIcon, SettingsIcon } from "@chakra-ui/icons";
 
 function Navbar() {
-  const location = useLocation();
   const [scrollPosition, setScrollPosition] = useState(0);
+  const location = useLocation();
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = React.useRef();
+
   const handleScroll = () => {
     const position = window.pageYOffset;
     setScrollPosition(position);
@@ -34,75 +47,127 @@ function Navbar() {
   }, []);
 
   return (
-    <Box
-      as="section"
-      position="fixed"
-      zIndex="1"
-      bg="rgb(244, 241, 234)"
-      width="100%"
-    >
-      <Box as="nav" bg="bg-surface" boxShadow="sm" shadow="lg">
-        <Container py={{ base: "1", lg: "5" }}>
+    <>
+      <Box
+        as="section"
+        position="fixed"
+        zIndex="1"
+        width="100%"
+        bgColor="#F4F1EA"
+        shadow="base"
+        
+      >
           <Center>
-            <Heading fontFamily="Lato" fontWeight="light">
-              film
-            </Heading>
-            <Heading fontFamily="Lato" fontWeight="bold">
-              faves
-            </Heading>
-            <Box pl="5">
-              <Link to="/account">
-                <Avatar bg="olivedrab" size="sm" />
-              </Link>
-            </Box>
-          </Center>
-          {scrollPosition > 200 ? (
-            <Link href="/#top">
-              <Box
-                position="fixed"
-                bottom="20px"
-                right={["16px", "84px"]}
-                zIndex={1}
-              >
-                <button onClick={handleScrollToTop}>
-                  <ChevronUpIcon />
-                </button>
-              </Box>
-            </Link>
-          ) : (
-            <Center>
-              <Button colorScheme="primary" variant="ghost">
-                <Link
-                  to="/"
-                  fontFamily="Helvetica Neue"
-                  className={location.pathname === "/" ? "active" : ""}
-                >
-                  reviews
-                </Link>
-              </Button>
-              <Button colorScheme="primary" variant="ghost">
-                <Link
-                  to="/mymovies"
-                  fontFamily="Helvetica Neue"
-                  className={location.pathname === "/mymovies" ? "active" : ""}
-                >
-                  watchlist
-                </Link>
-              </Button>
+        <Flex flexDirection="row">
+        <Button variant="ghost" ref={btnRef} onClick={onOpen} width="140px" margin="0 16px 0 15px">
+          <Heading fontFamily="Lato" fontWeight="hairline">
+            film
+          </Heading>
+          <Heading fontFamily="Lato" fontWeight="bold">
+            faves
+          </Heading>
+        </Button>
+        <InputGroup
+        p="1"
+        width="100%"
+        >
+        <Input 
+        placeholder="Search movies"
+        fontSize="14"
+        border="#DCD6CC 1px solid"
+        bgColor="white"
+        height="32px"
+        pr="300"
+        />
+        <InputRightElement children={<SearchIcon color='grey' />}
+        
+        />
+        </InputGroup>
+        <Button variant="ghost">
+          <BellIcon color="olivedrab" />
+        </Button>
+        <Button variant="ghost">
+          <EmailIcon color="olivedrab" />
+        </Button>
+        <Button variant="ghost">
+          <SettingsIcon color="olivedrab"/>
+        </Button>
+        </Flex>
+        </Center>
+        {/* <Link to="/account"> */}
+        {/* </Link> */}
+        <Drawer
+          isOpen={isOpen}
+          placement="left"
+          onClose={onClose}
+          finalFocusRef={btnRef}
+        >
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerCloseButton />
+            <DrawerHeader>Backend</DrawerHeader>
+            <DrawerBody>
               <Button colorScheme="white" variant="ghost">
-                <Link
-                  to="/tables"
-                  fontFamily="Helvetica Neue"
-                  className={location.pathname === "/tables" ? "active" : ""}
-                >
+                <Link to="/tables" fontFamily="Helvetica Neue">
                   database
                 </Link>
               </Button>
-            </Center>
-          )}
-        </Container>
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
       </Box>
-    </Box>
+      {scrollPosition > 200 ? (
+        <Link href="/#top">
+          <Box
+            position="fixed"
+            bottom="20px"
+            right={["16px", "84px"]}
+            zIndex={1}
+          >
+            <button onClick={handleScrollToTop}>
+              <ChevronUpIcon />
+            </button>
+          </Box>
+        </Link>
+      ) : (
+        <Box display="flex" pt="39" pb="2"  bgColor="#F4F1EA" justifyContent="center">
+          <Center>
+            <Button colorScheme="primary" variant="ghost">
+              <Link
+                to="/"
+                className={location.pathname === "/" ? "active" : ""}
+              >
+                <Text fontFamily="Helvetica" pt="3" fontWeight="normal">
+                Home
+                </Text>
+              </Link>
+            </Button>
+            <Button colorScheme="primary" variant="ghost">
+              <Link
+                to="/mymovies"
+                fontFamily="Helvetica Neue"
+                className={location.pathname === "/mymovies" ? "active" : ""}
+              >
+                <Text fontFamily="Helvetica" pt="3" fontWeight="normal">
+                My Movies
+                </Text>
+              </Link>
+            </Button>
+            <Button colorScheme="primary" variant="ghost">
+              <Link
+                to="/tables"
+                fontFamily="Helvetica Neue"
+                className={location.pathname === "/tables" ? "active" : ""}
+              >
+                <Text fontFamily="Helvetica" pt="3" fontWeight="normal">
+                Friends
+                </Text>
+              </Link>
+            </Button>
+          </Center>
+        </Box>
+      )}
+      </>
   );
 }
 

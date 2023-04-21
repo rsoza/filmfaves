@@ -19,9 +19,20 @@ export async function getMovies() {
     return [];
   }
 };
+
 export async function getReviews() {
   try {
     const response = await axios.get('http://localhost:8080/api/reviews');
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+export async function getBobsReviews() {
+  try {
+    const response = await axios.get('http://localhost:8080/api/bobsreviews');
     return response.data;
   } catch (error) {
     console.error(error);
@@ -91,6 +102,22 @@ export const postNewWatchlist = async (user_id, movie_id, watched) => {
       user_id: user_id,
       movie_id: movie_id,
       watched: watched
+    });
+    console.log(response)
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+export const postNewReview = async (user_id, movie_id, rating, review_comment) => {
+  try {
+    const response = await axios.post(`http://localhost:8080/api/reviews`,{
+      user_id: user_id,
+      movie_id: movie_id,
+      rating: rating,
+      review_comment:review_comment
     });
     console.log(response)
     return response.data;
