@@ -50,7 +50,7 @@ function AddReview() {
     }
 
     fetchTables();
-  }, []);
+  }, [userWatchlist]);
 
   const filteredWatchlist = userWatchlist.filter(
     (element) => element.user_id === 1 && element.watched === 0
@@ -60,7 +60,11 @@ function AddReview() {
     <Flex>
       <Spacer />
       <Box>
-        <IconButton variant="ghost" icon={<AddIcon />} onClick={onOpen} />
+        <IconButton variant="ghost"
+        color="white"
+        icon={<AddIcon />}
+        colorScheme="whiteAlpha"
+        onClick={onOpen} />
         <Modal isOpen={isOpen} onClose={onClose}>
           <ModalOverlay
             bg="none"
@@ -125,7 +129,7 @@ function AddReview() {
                   <Button
                     onClick={handleNewReview}
                     width="100px"
-                    bgColor="olivedrab"
+                    bgColor="red.500"
                   >
                     Add
                   </Button>

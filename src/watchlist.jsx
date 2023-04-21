@@ -80,7 +80,7 @@ function MyMovies() {
           <Flex>
             <Spacer />
             <Box>
-              <IconButton variant="ghost" icon={<AddIcon />} onClick={onOpen} />
+              <IconButton variant="ghost" colorScheme="whiteAlpha" icon={<AddIcon />} onClick={onOpen} color="white" />
               <Modal isCentered isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay
                   bg="none"
@@ -129,7 +129,7 @@ function MyMovies() {
                         <Button
                           onClick={handleNewWatchlist}
                           width="100px"
-                          bgColor="olivedrab"
+                          bgColor="red.500"
                         >
                           Add
                         </Button>
@@ -149,7 +149,7 @@ function MyMovies() {
           <Accordion allowToggle>
             <AccordionItem>
               <h2>
-                <AccordionButton>
+                <AccordionButton color="white">
                   <Box as="span" flex="1" textAlign="left">
                     Want to watch
                   </Box>
@@ -157,13 +157,13 @@ function MyMovies() {
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
-                <SetWatchlist setWatched={1} />
+                <SetWatchlist setWatched={0} />
               </AccordionPanel>
             </AccordionItem>
 
             <AccordionItem>
               <h2>
-                <AccordionButton>
+                <AccordionButton color="white">
                   <Box as="span" flex="1" textAlign="left">
                     Have watched
                   </Box>
@@ -171,7 +171,7 @@ function MyMovies() {
                 </AccordionButton>
               </h2>
               <AccordionPanel pb={4}>
-                <SetWatchlist setWatched={0} />
+                <SetWatchlist setWatched={1} />
               </AccordionPanel>
             </AccordionItem>
           </Accordion>

@@ -53,17 +53,16 @@ function Navbar() {
         position="fixed"
         zIndex="1"
         width="100%"
-        bgColor="#F4F1EA"
         shadow="base"
-        
+        bgColor="#141414"
       >
           <Center>
         <Flex flexDirection="row">
-        <Button variant="ghost" ref={btnRef} onClick={onOpen} width="140px" margin="0 16px 0 15px">
-          <Heading fontFamily="Lato" fontWeight="hairline">
+        <Button variant="ghost" colorScheme="whiteAlpha" ref={btnRef} onClick={onOpen} width="140px" margin="0 16px 0 15px">
+          <Heading fontFamily="Lato" fontWeight="hairline" color="white">
             film
           </Heading>
-          <Heading fontFamily="Lato" fontWeight="bold">
+          <Heading fontFamily="Lato" fontWeight="bold" color="red.500">
             faves
           </Heading>
         </Button>
@@ -83,14 +82,14 @@ function Navbar() {
         
         />
         </InputGroup>
-        <Button variant="ghost">
-          <BellIcon color="olivedrab" />
+        <Button variant="ghost" colorScheme="whiteAlpha">
+          <BellIcon color="white" />
         </Button>
         <Button variant="ghost">
-          <EmailIcon color="olivedrab" />
+          <EmailIcon color="white" colorScheme="whiteAlpha" />
         </Button>
         <Button variant="ghost">
-          <SettingsIcon color="olivedrab"/>
+          <SettingsIcon color="white" colorScheme="whiteAlpha"/>
         </Button>
         </Flex>
         </Center>
@@ -125,39 +124,39 @@ function Navbar() {
             zIndex={1}
           >
             <button onClick={handleScrollToTop}>
-              <ChevronUpIcon />
+              <ChevronUpIcon color="white" />
             </button>
           </Box>
         </Link>
       ) : (
-        <Box display="flex" pt="39" pb="2"  bgColor="#F4F1EA" justifyContent="center">
+        <Box display="flex" pt="39" pb="2"  bgColor="#141414" justifyContent="center">
           <Center>
-            <Button colorScheme="primary" variant="ghost">
+            <Button colorScheme="whiteAlpha" variant="ghost">
               <Link
                 to="/"
-                className={location.pathname === "/" ? "active" : ""}
+                className={location.pathname === "/" ? "active" : "inactive"}
               >
                 <Text fontFamily="Helvetica" pt="3" fontWeight="normal">
                 Home
                 </Text>
               </Link>
             </Button>
-            <Button colorScheme="primary" variant="ghost">
+            <Button colorScheme="whiteAlpha" variant="ghost">
               <Link
                 to="/mymovies"
                 fontFamily="Helvetica Neue"
-                className={location.pathname === "/mymovies" ? "active" : ""}
+                className={location.pathname === "/mymovies" ? "active" : "inactive"}
               >
                 <Text fontFamily="Helvetica" pt="3" fontWeight="normal">
                 My Movies
                 </Text>
               </Link>
             </Button>
-            <Button colorScheme="primary" variant="ghost">
+            <Button colorScheme="whiteAlpha" variant="ghost">
               <Link
                 to="/tables"
                 fontFamily="Helvetica Neue"
-                className={location.pathname === "/tables" ? "active" : ""}
+                className={location.pathname === "/tables" ? "active" : "inactive"}
               >
                 <Text fontFamily="Helvetica" pt="3" fontWeight="normal">
                 Friends

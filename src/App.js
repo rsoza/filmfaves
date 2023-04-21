@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./navbar";
 import "./App.css";
-import { Box, Center, Flex, Heading } from "@chakra-ui/react";
+import { Box, Center, Flex, Heading, Spacer } from "@chakra-ui/react";
 import Review from "./components/review";
-// import AddReview from "./components/addreview";
+import AddReview from "./components/addreview";
 import Slide from "./components/filler/Slide";
-import CurrentUserReview from "./components/filler/currentuser";
+import CurrentUserReview from "./components/currentuser";
 
 function App() {
   const [moviePosters, setMoviePosters] = useState([]);
@@ -23,35 +23,40 @@ function App() {
       });
   }, []);
 
-    console.log(moviePosters)
   return (
     <>
       <Navbar />
       <div className="layout" section="top">
-        {/* <AddReview /> */}
-         <Slide images={moviePosters} />
+        <Slide images={moviePosters} />
         <Center>
-          <Flex 
-          border='none'>
-            <Box>
-              <Heading 
-              fontSize="16"
-              p='3'
-              fontWeight='bold'
-              fontFamily="Helvetica"
-              >
-                MY REVIEWS
-              </Heading>
+          <Flex>
+            <Box pr="3" pt="5">
+              <Flex>
+                <Box>
+                  <Heading
+                    fontSize="16"
+                    p="3"
+                    fontWeight="bold"
+                    fontFamily="Helvetica"
+                    color="red.500"
+                  >
+                    MY REVIEWS
+                  </Heading>
+                </Box>
+                <Spacer />
+                <AddReview />
+              </Flex>
               <CurrentUserReview />
             </Box>
             <Box>
-              <Heading 
-              fontSize="16"
-              p='3'
-              fontWeight='bold'
-              fontFamily="Helvetica"
+              <Heading
+                fontSize="16"
+                p="3"
+                fontWeight="bold"
+                fontFamily="Helvetica"
+                color="red.500"
               >
-               COMMUNITY UPDATES
+                COMMUNITY UPDATES
               </Heading>
               <Review />
             </Box>

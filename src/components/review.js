@@ -32,7 +32,6 @@ function Review() {
           <Card
             direction={{ base: "column", sm: "row" }}
             overflowY="hidden"
-            variant="outline"
             size="md"
             pt="2"
             pl="2"
@@ -40,7 +39,8 @@ function Review() {
             shadow="md"
             height="300px"
             width="400px"
-            borderColor="#D8D8D8"
+            bgColor="whiteAlpha.100"
+            borderRadius="2xl"
           >
             <Stack>
               <Stack flexDirection="row">
@@ -49,9 +49,10 @@ function Review() {
                   maxW={{ base: "20%", sm: "35px" }}
                   src={"/images/users/" + review.user_id + ".jpg"}
                   alt={review.firstname}
+                  borderRadius="50%"
                 />
                 <Text
-                  color="olivedrab"
+                  color="red.500"
                   fontSize="12"
                   pl="3"
                   fontWeight="bold"
@@ -64,6 +65,7 @@ function Review() {
                   pl="1"
                   fontWeight="light"
                   fontFamily="Helvetica"
+                  color="white"
                 >
                   has watched
                 </Text>
@@ -74,12 +76,13 @@ function Review() {
                 src={"/images/movies/" + review.movie_id + ".jpg"}
                 alt={review.title}
                 pl="50"
+                
               />
               <CardFooter>
                 <Text
                   fontWeight="semibold"
                   fontSize="12"
-                  color="olivedrab"
+                  color="Highlight"
                   fontFamily="Helvetica"
                 >
                   Rating: {review.rating}/10
@@ -89,7 +92,7 @@ function Review() {
 
             <Stack>
               <CardBody textAlign={["left"]}>
-                <Heading size="md" pt="8">
+                <Heading size="md" pt="8" color="white">
                   {review.title}
                 </Heading>
 
@@ -102,7 +105,7 @@ function Review() {
                   >
                     Genre:
                   </Text>
-                  <Text fontSize="13" fontFamily="Helvetica" pl="1">
+                  <Text fontSize="13" fontFamily="Helvetica" pl="1" color="white">
                     {review.genre}
                   </Text>
                 </Stack>
@@ -115,7 +118,7 @@ function Review() {
                   >
                     Cast:
                   </Text>
-                  <Text fontSize="13" fontFamily="Helvetica" pl="1">
+                  <Text fontSize="13" fontFamily="Helvetica" pl="1" color="white">
                     {review.star_actors}
                   </Text>
                 </Stack>
@@ -135,8 +138,7 @@ function Review() {
                 fontSize="14"
                 fontWeight="normal"
                 fontStyle="italic"
-                color="grey"
-                pb="4"
+                color="white"
                 fontFamily="Helvetica"
                 >
                 "{review.review_comment}"

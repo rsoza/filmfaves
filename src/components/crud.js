@@ -224,12 +224,15 @@ app.put("/api/reviews/:id", (req, res) => {
 // Delete a review
 app.delete("/api/reviews/:id", (req, res) => {
   const { id } = req.params;
-  const sql = "DELETE FROM reviews WHERE user_id = ?";
+  const sql = "DELETE FROM reviews WHERE review_id = ?";
+  console.log("DELETE/api/reviews",sql)
+  console.log(id)
+
   db.run(sql, [id], (err) => {
     if (err) {
       res.status(500).json({ error: "Error deleting review from database." });
     } else {
-      res.json({ message: "User deleted successfully." });
+      res.json({ message: "Review deleted successfully." });
     }
   });
 });
@@ -343,6 +346,32 @@ app.get("/api/fullWatchlistTable", (req, res) => {
     }
   });
 });
+
+
+// Watchlist table for a user specific to watched or want to watch
+app.get("/api/fullUsersWatchlistTable/:id", (req, res) => {
+  const { id } = req.params;
+  const { watched } = req.query;
+
+  const sql = 
+  `SELECT * 
+  FROM watchlist 
+  JOIN movies ON movies.movie_id = watchlist.movie_id 
+  JOIN users ON users.user_id = watchlist.user_id
+  WHERE watchlist.watched = ? AND watchlist.user_id = ?`;
+  db.all(sql, [watched, id], (err, rows) => {
+    if (err) {
+      console.log(res)
+      res
+        .status(500)
+        .json({ error: "Error retrieving users watchlist from database." });
+    } else {
+      res.set("Content-Type", "application/json"); // Set the Content-Type header
+      res.json(rows);
+    }
+  });
+});
+
 
 
 app.listen(port, () => {

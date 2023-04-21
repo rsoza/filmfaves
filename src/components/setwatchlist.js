@@ -13,7 +13,7 @@ import {
   MenuList,
   MenuItem,
 } from "@chakra-ui/react";
-import { getFullWatchlist, deleteMovieFromWatchlist, updateWatchlist } from "./axios";
+import { getUserWatchlistByWatched, deleteMovieFromWatchlist, updateWatchlist } from "./axios";
 import { ChevronDownIcon, CheckIcon } from "@chakra-ui/icons";
 
 const SetWatchlist = ({setWatched}) => {
@@ -39,23 +39,21 @@ const SetWatchlist = ({setWatched}) => {
 
   useEffect(() => {
     async function fetchTables() {
-      const watchlistTable = await getFullWatchlist();
+      const watchlistTable = await getUserWatchlistByWatched(1, setWatched);
       setWatchlist(watchlistTable);
     }
     
     fetchTables();
-  }, [watchlist]);
+  }, [setWatched, watchlist]);
   
-  const filteredWatchlist = watchlist.filter(element => element.watched === setWatched && element.user_id === 1);
 
   return (
     <>
-      {filteredWatchlist.length > 0 ? (
-        filteredWatchlist.map((watching) => (
+      {watchlist.length > 0 ? (
+        watchlist.map((watching) => (
           <Container p="2">
             <Card
               direction={{ base: "column", sm: "row" }}
-              variant="outline"
               size="md"
               pt="2"
               pl="2"
@@ -92,9 +90,9 @@ const SetWatchlist = ({setWatched}) => {
                       as={Button}
                       rightIcon={<ChevronDownIcon />}
                     >
-                      <span>
+                      <span color="white">
                         <CheckIcon color="olivedrab" mr="3" />
-                       {setWatched ? 'Want to watch' :'Watched'}
+                       {!setWatched ? 'Want to watch' :'Watched'}
                       </span>
                     </MenuButton>
                     <MenuList>
@@ -105,8 +103,8 @@ const SetWatchlist = ({setWatched}) => {
                           watching.user_id,
                           watching.movie_id);
                       }}>
-                        <span>
-                        {setWatched ? 'Watched': 'Want to watch'}
+                        <span color="white">
+                        {!setWatched ? 'Watched': 'Want to watch'}
                         </span>
                       </MenuItem>
                       <MenuItem
@@ -115,7 +113,7 @@ const SetWatchlist = ({setWatched}) => {
                           handleRemoveFromWatchlist(watching.watchlist_id);
                         }}
                       >
-                        <span>Remove from watchlist</span>
+                        <span color="white">Remove from watchlist</span>
                       </MenuItem>
                     </MenuList>
                   </Menu>
@@ -124,7 +122,7 @@ const SetWatchlist = ({setWatched}) => {
             </Card>
           </Container>
         ))) : (
-          <Heading>(0) items listed</Heading>
+          <Heading color="white">(0) items listed</Heading>
         )}
     </>
   );

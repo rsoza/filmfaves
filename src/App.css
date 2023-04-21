@@ -15,8 +15,12 @@
 
 
 .active {
-  color: olivedrab;
-  border-bottom: 2px solid olivedrab;
+  color: rgb(255, 58, 58);
+  border-bottom: 2px solid rgb(255, 58, 58);
+}
+
+.inactive {
+  color: white;
 }
 
 .App-header {
@@ -44,5 +48,5 @@
 }
 
 .layout {
-  background-color: rgb(244, 241, 234);
+  background-color:#141414;
 }
