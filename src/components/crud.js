@@ -348,8 +348,31 @@ app.get("/api/fullWatchlistTable", (req, res) => {
 });
 
 
+// Watchlist table for a user specific 
+app.get("/api/newWatchlist/:id", (req, res) => {
+  const { id } = req.params;
+
+  const sql = 
+  `SELECT *
+  FROM movies
+  WHERE movie_id NOT IN (
+      SELECT movie_id
+      FROM watchlist
+      WHERE user_id = ?)`;
+  db.all(sql, [id], (err, rows) => {
+    if (err) {
+      res
+        .status(500)
+        .json({ error: "Error retrieving users watchlist from database." });
+    } else {
+      res.set("Content-Type", "application/json"); // Set the Content-Type header
+      res.json(rows);
+    }
+  });
+});
+
 // Watchlist table for a user specific to watched or want to watch
-app.get("/api/fullUsersWatchlistTable/:id", (req, res) => {
+app.get("/api/fullUserWatchlistTableWatched/:id", (req, res) => {
   const { id } = req.params;
   const { watched } = req.query;
 

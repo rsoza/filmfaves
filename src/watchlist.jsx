@@ -27,9 +27,8 @@ import {
 import { AddIcon } from "@chakra-ui/icons";
 import { useDisclosure } from "@chakra-ui/react";
 import {
-  getFullWatchlist,
-  getMovies,
   postNewWatchlist,
+  getMoviesToAddToWatchlist,
 } from "./components/axios.js";
 
 function MyMovies() {
@@ -37,7 +36,6 @@ function MyMovies() {
   const [movieList, setMovieList] = useState([]);
   const [movieId, setMovieTitle] = useState(null);
   const [watchedVal, setWatchedVal] = useState(null);
-  const [userWatchlist, setUserWatchlist] = useState([]);
 
   const handleNewWatchlist = async () => {
     try {
@@ -50,27 +48,12 @@ function MyMovies() {
 
   useEffect(() => {
     async function fetchTables() {
-      const movieTable = await getMovies();
-      const user_watchlist = await getFullWatchlist();
+      const movieTable = await getMoviesToAddToWatchlist(1);
       setMovieList(movieTable);
-      setUserWatchlist(user_watchlist);
     }
 
     fetchTables();
-  }, []);
-
-  const filteredWatchlist = userWatchlist.filter(
-    (element) => element.user_id === 1
-  );
-
-  const filteredMovieList = movieList.filter((element) => {
-    for (const userMovies of filteredWatchlist) {
-      if (element.movie_id === userMovies.movie_id) {
-        return false;
-      }
-    }
-    return true;
-  });
+  }, [movieList]);
 
   return (
     <>
@@ -80,7 +63,13 @@ function MyMovies() {
           <Flex>
             <Spacer />
             <Box>
-              <IconButton variant="ghost" colorScheme="whiteAlpha" icon={<AddIcon />} onClick={onOpen} color="white" />
+              <IconButton
+                variant="ghost"
+                colorScheme="whiteAlpha"
+                icon={<AddIcon />}
+                onClick={onOpen}
+                color="white"
+              />
               <Modal isCentered isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay
                   bg="none"
@@ -100,7 +89,7 @@ function MyMovies() {
                         setMovieTitle(event.target.value);
                       }}
                     >
-                      {filteredMovieList.map((movie) => (
+                      {movieList.map((movie) => (
                         <option key={movie.movie_id} value={movie.movie_id}>
                           {movie.title}
                         </option>
@@ -115,10 +104,10 @@ function MyMovies() {
                       }}
                       isRequired
                     >
-                      <option key={1} value={0}>
+                      <option key={0} value={0}>
                         Want to watch
                       </option>
-                      <option key={2} value={1}>
+                      <option key={1} value={1}>
                         Have watched
                       </option>
                     </Select>
@@ -134,10 +123,7 @@ function MyMovies() {
                           Add
                         </Button>
                       </Box>
-                      <Button
-                        onClick={onClose}
-                        width="100px"
-                      >
+                      <Button onClick={onClose} width="100px">
                         Close
                       </Button>
                     </Stack>

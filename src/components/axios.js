@@ -90,11 +90,21 @@ export async function getFullWatchlist() {
 export const getUserWatchlistByWatched = async (id, watched) => {
   try {
     const response = await axios.get(
-      `http://localhost:8080/api/fullUsersWatchlistTable/${id}`,
+      `http://localhost:8080/api/fullUserWatchlistTableWatched/${id}`,
       {
         params: { watched: watched },
       }
     );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+export const getMoviesToAddToWatchlist = async (id) => {
+  try {
+    const response = await axios.get(`http://localhost:8080/api/newWatchlist/${id}`);
     return response.data;
   } catch (error) {
     console.error(error);
