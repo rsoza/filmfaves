@@ -216,7 +216,7 @@ app.put("/api/reviews/:id", (req, res) => {
     if (err) {
       res.status(500).json({ error: "Error updating review in database." });
     } else {
-      res.json({ message: "User updated successfully." });
+      res.json({ message: "Reviews updated successfully." });
     }
   });
 });

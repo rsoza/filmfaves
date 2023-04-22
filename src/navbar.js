@@ -154,9 +154,9 @@ function Navbar() {
             </Button>
             <Button colorScheme="whiteAlpha" variant="ghost">
               <Link
-                to="/tables"
+                to="/friends"
                 fontFamily="Helvetica Neue"
-                className={location.pathname === "/tables" ? "active" : "inactive"}
+                className={location.pathname === "/friends" ? "active" : "inactive"}
               >
                 <Text fontFamily="Helvetica" pt="3" fontWeight="normal">
                 Friends

@@ -10,23 +10,34 @@ import {
   Spacer,
   Input,
   Select,
+  NumberInput,
+  NumberInputField,
+  NumberInputStepper,
+  NumberIncrementStepper,
+  NumberDecrementStepper,
 } from "@chakra-ui/react";
-import { getBobsReviews, deleteReview } from "./axios";
-import { DeleteIcon, EditIcon, CheckIcon } from "@chakra-ui/icons";
+import { getBobsReviews, deleteReview, getMovies, updateReview } from "./axios";
+import { DeleteIcon, EditIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
 
 function CurrentUserReview() {
   const [reviews, setReviews] = useState([]);
   const [movie, setMovie] = useState("");
+  const [movieId, setMovieId] = useState("");
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState("");
+  const [movieList, setMovieList] = useState([]);
   const [isEditting, setIsEditting] = useState(false);
 
-  const handleEditOpen = (title) => {
+  const handleEditOpen = (title, review, rate, id) => {
     setIsEditting(true);
     setMovie(title);
+    setComment(review);
+    setRating(rate);
+    setMovieId(id);
   };
 
-  const handleEditClose = () => {
+  const handleEditClose = async (id) => {
+    await updateReview(id, 1, movieId, rating, comment);
     setIsEditting(false);
   };
 
@@ -42,6 +53,8 @@ function CurrentUserReview() {
   useEffect(() => {
     async function fetchTables() {
       const reviewsTable = await getBobsReviews();
+      const moviesTable = await getMovies();
+      setMovieList(moviesTable);
       setReviews(reviewsTable);
     }
 
@@ -61,14 +74,23 @@ function CurrentUserReview() {
           >
             <Flex>
               <Center>
-                <Box p="1">
-                  <Select 
-                  placeholder={review.title}
-                  value={movie}
-                  textColor="white"
-                  onChange={(event) => {
-                    setMovie(event.target.value);
-                  }}>
+                <Box>
+                  <Select
+                    size="xs"
+                    placeholder={review.title}
+                    height="22px"
+                    bgColor="white"
+                    value={movie}
+                    width="200px"
+                    onChange={(event) => {
+                      setMovie(event.target.value);
+                    }}
+                  >
+                    {movieList.map((movie) => (
+                      <option key={movie.movie_id} value={movie.movie_id}>
+                        {movie.title}
+                      </option>
+                    ))}
                   </Select>
                 </Box>
               </Center>
@@ -78,7 +100,9 @@ function CurrentUserReview() {
                   size="xs"
                   variant="ghost"
                   colorScheme="whiteAlpha"
-                  onClick={() => {handleEditClose()}}
+                  onClick={() => {
+                    handleEditClose(review.review_id);
+                  }}
                 >
                   <CheckIcon color="white" />
                 </Button>
@@ -87,34 +111,47 @@ function CurrentUserReview() {
                   variant="ghost"
                   colorScheme="whiteAlpha"
                   onClick={() => {
-                    handleRemoveBobsReview(review.review_id);
+                    setIsEditting(false);
                   }}
                 >
-                  <DeleteIcon color="white" />
+                  <CloseIcon color="red.500" />
                 </Button>
               </Box>
             </Flex>
             <Flex>
-              <Text
-                fontSize="12"
-                fontWeight="normal"
-                fontStyle="italic"
-                color="White"
-                pl="4"
-                fontFamily="Helvetica"
-              >
-                "{review.review_comment}"
-              </Text>
+              <Input
+                bgColor="white"
+                size="xs"
+                height="22px"
+                width="200px"
+                placeholder={comment}
+                value={comment}
+                onChange={(event) => {
+                  setComment(event.target.value);
+                }}
+              />
               <Spacer />
               <Box>
-                <Text
-                  fontWeight="semibold"
-                  fontSize="12"
-                  color="Highlight"
-                  fontFamily="Helvetica"
+                <NumberInput
+                  step={2}
+                  min={0}
+                  max={10}
+                  size="xs"
+                  width="80px"
+                  bgColor="white"
                 >
-                  Rating: {review.rating}/10
-                </Text>
+                  <NumberInputField
+                    placeholder={rating}
+                    value={rating}
+                    onChange={(event) => {
+                      setRating(event.target.value);
+                    }}
+                  />
+                  <NumberInputStepper>
+                    <NumberIncrementStepper />
+                    <NumberDecrementStepper />
+                  </NumberInputStepper>
+                </NumberInput>
               </Box>
             </Flex>
           </Container>
@@ -140,7 +177,14 @@ function CurrentUserReview() {
                   size="xs"
                   variant="ghost"
                   colorScheme="whiteAlpha"
-                  onClick={()=> {handleEditOpen(review.title)}}
+                  onClick={() => {
+                    handleEditOpen(
+                      review.title,
+                      review.review_comment,
+                      review.rating,
+                      review.movie_id
+                    );
+                  }}
                 >
                   <EditIcon color="white" />
                 </Button>

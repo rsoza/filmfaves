@@ -75,6 +75,25 @@ export async function getFullReviews() {
   }
 }
 
+export const updateReview = async (id, user_id, movie_id, rating, review_comment) => {
+  try {
+    const response = await axios.put(
+      `http://localhost:8080/api/reviews/${id}`,
+      {
+        user_id,
+        movie_id,
+        rating,
+        review_comment
+      }
+    );
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
 export async function getFullWatchlist() {
   try {
     const response = await axios.get(

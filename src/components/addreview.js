@@ -24,7 +24,7 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { useDisclosure } from "@chakra-ui/react";
-import { getFullWatchlist, postNewReview } from "./axios";
+import { getUserWatchlistByWatched, postNewReview } from "./axios";
 
 function AddReview() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -45,16 +45,12 @@ function AddReview() {
 
   useEffect(() => {
     async function fetchTables() {
-      const user_watchlist = await getFullWatchlist();
+      const user_watchlist = await getUserWatchlistByWatched(1, 1);
       setUserWatchlist(user_watchlist);
     }
 
     fetchTables();
   }, [userWatchlist]);
-
-  const filteredWatchlist = userWatchlist.filter(
-    (element) => element.user_id === 1 && element.watched === 0
-  );
 
   return (
     <Flex>
@@ -84,7 +80,7 @@ function AddReview() {
                   setMovieTitle(event.target.value);
                 }}
               >
-                {filteredWatchlist.map((movie) => (
+                {userWatchlist.map((movie) => (
                   <option key={movie.movie_id} value={movie.movie_id}>
                     {movie.title}
                   </option>

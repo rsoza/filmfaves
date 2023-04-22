@@ -124,7 +124,7 @@ function Review() {
                 </Stack>
                 <Button
                   variant="solid"
-                  colorScheme="blackAlpha"
+                  colorScheme="whiteAlpha"
                   borderRadius="10"
                   shadow="lg"
                   fontFamily="Lato"
