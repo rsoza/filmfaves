@@ -6,10 +6,10 @@ import { ChakraProvider } from "@chakra-ui/react";
 
 // pages
 import MyMovies from "./watchlist";
-import Account from "./account";
 import Friends from "./friends";
 import App from "./App";
 import Tables from "./tables";
+import Profile from "./profile";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -19,8 +19,8 @@ root.render(
         <Routes>
           <Route exact path="/" element={<App />} />
           <Route exact path="/mymovies" element={<MyMovies />} />
-          <Route exact path="/account" element={<Account />} />
           <Route exact path="/friends" element={<Friends />} />
+          <Route exact path="/profile" element={<Profile />} />
           <Route exact path="/tables" element={<Tables />} />
         </Routes>
       </Router>

@@ -88,9 +88,11 @@ function Navbar() {
         <Button variant="ghost">
           <EmailIcon color="white" colorScheme="whiteAlpha" />
         </Button>
+        <Link to="/profile">
         <Button variant="ghost">
           <SettingsIcon color="white" colorScheme="whiteAlpha"/>
         </Button>
+        </Link>
         </Flex>
         </Center>
         {/* <Link to="/account"> */}
@@ -106,6 +108,11 @@ function Navbar() {
             <DrawerCloseButton />
             <DrawerHeader>Backend</DrawerHeader>
             <DrawerBody>
+            <Button colorScheme="white" variant="ghost">
+              <Link to="/" fontFamily="Helvetica Neue">
+                home
+              </Link>
+            </Button>
               <Button colorScheme="white" variant="ghost">
                 <Link to="/tables" fontFamily="Helvetica Neue">
                   database
@@ -115,7 +122,7 @@ function Navbar() {
           </DrawerContent>
         </Drawer>
       </Box>
-      {scrollPosition > 200 ? (
+      {(scrollPosition > 200 || location.pathname === "/profile") ? (
         <Link href="/#top">
           <Box
             position="fixed"

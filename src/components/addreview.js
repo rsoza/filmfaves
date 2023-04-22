@@ -24,7 +24,7 @@ import {
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 import { useDisclosure } from "@chakra-ui/react";
-import { getUserWatchlistByWatched, postNewReview } from "./axios";
+import { getMoviesWWithoutReviews, postNewReview } from "./axios";
 
 function AddReview() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -37,15 +37,23 @@ function AddReview() {
     try {
       console.log("Added to reviews table: ", { movieId, review, rating });
       await postNewReview(1, movieId, rating, review);
+      setReview("");
       onClose();
     } catch (e) {
       console.log(e);
     }
   };
 
+  const handleClose = () => {
+    setReview("");
+    setRating(null);
+    setMovieTitle(null);
+    onClose();
+  };
+
   useEffect(() => {
     async function fetchTables() {
-      const user_watchlist = await getUserWatchlistByWatched(1, 1);
+      const user_watchlist = await getMoviesWWithoutReviews(1, 1);
       setUserWatchlist(user_watchlist);
     }
 
@@ -130,7 +138,7 @@ function AddReview() {
                     Add
                   </Button>
                 </Box>
-                <Button width="100px" onClick={onClose}>
+                <Button width="100px" onClick={handleClose}>
                   Close
                 </Button>
               </Stack>

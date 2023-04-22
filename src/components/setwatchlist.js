@@ -59,6 +59,7 @@ const SetWatchlist = ({setWatched}) => {
               pl="2"
               textAlign={["left"]}
               shadow="lg"
+              bgColor="whiteAlpha.100"
             >
               <Stack>
                 <Image
@@ -71,10 +72,10 @@ const SetWatchlist = ({setWatched}) => {
               </Stack>
               <Stack>
                 <CardBody textAlign={["left"]}>
-                  <Heading size="md" mb="4">
+                  <Heading size="md" mb="4" color="white">
                     {watching.title}
                   </Heading>
-                  <Text fontSize="14" color="grey" fontFamily="Helvetica">
+                  <Text fontSize="14" color="Highlight" fontFamily="Helvetica">
                     Genre: {watching.genre}
                   </Text>
                   <Text fontSize="14" color="grey" fontFamily="Helvetica">
@@ -85,7 +86,7 @@ const SetWatchlist = ({setWatched}) => {
                   </Text>
                   <Menu>
                     <MenuButton
-                      colorScheme="blackAlpha"
+                      colorScheme="whiteAlpha"
                       mt="2"
                       as={Button}
                       rightIcon={<ChevronDownIcon />}

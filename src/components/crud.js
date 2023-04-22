@@ -37,6 +37,18 @@ app.get("/api/users", (req, res) => {
   });
 });
 
+// Get user
+app.get("/api/userone", (req, res) => {
+  const sql = "SELECT * FROM users WHERE users.user_id = 1";
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      res.status(500).json({ error: "Error retrieving users from database." });
+    } else {
+      res.json(rows);
+    }
+  });
+});
+
 // Add a new user
 app.post("/api/users", (req, res) => {
   const [firstname, lastname, location] = req.body;
@@ -184,6 +196,29 @@ app.get("/api/bobsreviews", (req, res) => {
         .status(500)
         .json({ error: "Error retrieving reviews from database." });
     } else {
+      res.json(rows);
+    }
+  });
+});
+
+// Watchlist table for a user specific to watched or want to watch
+app.get("/api/fullMoviesWWithoutReviews/:id", (req, res) => {
+  const { id } = req.params;
+  const sql = 
+  `SELECT * 
+  FROM movies 
+  WHERE movie_id NOT IN (
+    SELECT movie_id
+    FROM reviews
+    WHERE user_id = ?)`;
+  db.all(sql, [id], (err, rows) => {
+    if (err) {
+      console.log(res)
+      res
+        .status(500)
+        .json({ error: "Error retrieving users watchlist from database." });
+    } else {
+      res.set("Content-Type", "application/json"); // Set the Content-Type header
       res.json(rows);
     }
   });

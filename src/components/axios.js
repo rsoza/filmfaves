@@ -10,6 +10,34 @@ export async function getUsers() {
   }
 }
 
+export async function getUserOne() {
+  try {
+    const response = await axios.get("http://localhost:8080/api/userone");
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+}
+
+export const updateUser = async (id, firstname, lastname, location) => {
+  try {
+    const response = await axios.put(
+      `http://localhost:8080/api/users/${id}`,
+      {
+        firstname,
+        lastname,
+        location
+      }
+    );
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
 export async function getMovies() {
   try {
     const response = await axios.get("http://localhost:8080/api/movies");
@@ -114,6 +142,16 @@ export const getUserWatchlistByWatched = async (id, watched) => {
         params: { watched: watched },
       }
     );
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return [];
+  }
+};
+
+export const getMoviesWWithoutReviews = async (id) => {
+  try {
+    const response = await axios.get(`http://localhost:8080/api/fullMoviesWWithoutReviews/${id}`);
     return response.data;
   } catch (error) {
     console.error(error);
