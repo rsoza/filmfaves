@@ -1,31 +1,10 @@
+# CRUD operations
 
+## Users
 
-const express = require("express");
-const bodyParser = require("body-parser");
-const sqlite = require("sqlite3").verbose();
+## `GET`
 
-// connection between database and react
-const app = express();
-const port = 8080;
-
-// allows fetch
-var cors = require("cors");
-app.use(cors());
-
-// interpreter
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-const db = new sqlite.Database("./db.db", sqlite.OPEN_READWRITE, (err) => {
-  if (err) {
-    console.error(err.message);
-  }
-  console.log("Connected to the db.db database.");
-});
-
-/* USERS TABLES */
-
-// Get all users
+```bash
 app.get("/api/users", (req, res) => {
   const sql = "SELECT * FROM users";
   db.all(sql, [], (err, rows) => {
@@ -36,8 +15,9 @@ app.get("/api/users", (req, res) => {
     }
   });
 });
-
-// Get user
+```
+```bash
+// Get user: main
 app.get("/api/userone", (req, res) => {
   const sql = "SELECT * FROM users WHERE users.user_id = 1";
   db.all(sql, [], (err, rows) => {
@@ -48,8 +28,11 @@ app.get("/api/userone", (req, res) => {
     }
   });
 });
+```
 
-// Add a new user
+## `POST`
+
+```bash
 app.post("/api/users", (req, res) => {
   const [firstname, lastname, location] = req.body;
   if (!firstname || !lastname || !location) {
@@ -69,11 +52,12 @@ app.post("/api/users", (req, res) => {
   });
 });
 
+```
 
+## Movies
 
-/* MOVIES TABLE */
-
-// Get all movies
+## `GET`
+```bash
 app.get("/api/movies", (req, res) => {
   const sql = "SELECT * FROM movies ORDER BY title ASC";
   db.all(sql, [], (err, rows) => {
@@ -85,48 +69,39 @@ app.get("/api/movies", (req, res) => {
   });
 });
 
+```
+```bash
+// Watchlist table for a user specific
+app.get("/api/newWatchlist/:id", (req, res) => {
+  const { id } = req.params;
 
-/* REVIEWS TABLES */
-
-// Get all reviews
-app.get("/api/reviews", (req, res) => {
-  const sql = "SELECT * FROM reviews";
-  db.all(sql, [], (err, rows) => {
+  const sql =
+  `SELECT *
+  FROM movies
+  WHERE movie_id NOT IN (
+      SELECT movie_id
+      FROM watchlist
+      WHERE user_id = ?)`;
+  db.all(sql, [id], (err, rows) => {
     if (err) {
       res
         .status(500)
-        .json({ error: "Error retrieving reviews from database." });
+        .json({ error: "Error retrieving users watchlist from database." });
     } else {
+      res.set("Content-Type", "application/json"); // Set the Content-Type header
       res.json(rows);
     }
   });
 });
+```
 
-// Get all bobs reviews
-app.get("/api/bobsreviews", (req, res) => {
-  const sql = `SELECT * 
-  FROM reviews 
-  JOIN movies ON movies.movie_id = reviews.movie_id 
-  JOIN users ON users.user_id = reviews.user_id
-  WHERE reviews.user_id = 1
-  ORDER BY reviews.review_id DESC`;
-  db.all(sql, [], (err, rows) => {
-    if (err) {
-      res
-        .status(500)
-        .json({ error: "Error retrieving reviews from database." });
-    } else {
-      res.json(rows);
-    }
-  });
-});
-
+```bash
 // Watchlist table for a user specific to watched or want to watch
 app.get("/api/fullMoviesWWithoutReviews/:id", (req, res) => {
   const { id } = req.params;
-  const sql = 
-  `SELECT * 
-  FROM movies 
+  const sql =
+  `SELECT *
+  FROM movies
   WHERE movie_id NOT IN (
     SELECT movie_id
     FROM reviews
@@ -144,6 +119,73 @@ app.get("/api/fullMoviesWWithoutReviews/:id", (req, res) => {
   });
 });
 
+```
+
+## Reviews
+
+## `GET`
+
+```bash
+// Get all reviews
+app.get("/api/reviews", (req, res) => {
+  const sql = "SELECT * FROM reviews";
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      res
+        .status(500)
+        .json({ error: "Error retrieving reviews from database." });
+    } else {
+      res.json(rows);
+    }
+  });
+});
+```
+```bash
+// Get all bobs reviews
+app.get("/api/bobsreviews", (req, res) => {
+  const sql = `SELECT *
+  FROM reviews
+  JOIN movies ON movies.movie_id = reviews.movie_id
+  JOIN users ON users.user_id = reviews.user_id
+  WHERE reviews.user_id = 1
+  ORDER BY reviews.review_id DESC`;
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      res
+        .status(500)
+        .json({ error: "Error retrieving reviews from database." });
+    } else {
+      res.json(rows);
+    }
+  });
+});
+```
+```bash
+// Reviews full table
+app.get("/api/fullReviewTable", (req, res) => {
+  const sql =
+  `SELECT *
+  FROM reviews
+  JOIN movies ON movies.movie_id = reviews.movie_id
+  JOIN users ON users.user_id = reviews.user_id
+  WHERE reviews.user_id != 1
+  ORDER BY reviews.review_id DESC`;
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      res
+        .status(500)
+        .json({ error: "Error retrieving reviews from database." });
+    } else {
+      res.set("Content-Type", "application/json"); // Set the Content-Type header
+      res.json(rows);
+    }
+  });
+});
+```
+
+## `POST`
+
+```bash
 // Add a new review
 app.post("/api/reviews", (req, res) => {
   const {user_id, movie_id, rating, review_comment} = req.body;
@@ -160,7 +202,11 @@ app.post("/api/reviews", (req, res) => {
     }
   });
 });
+```
 
+## `PUT`
+
+```bash
 // Update a review
 app.put("/api/reviews/:id", (req, res) => {
   const { id } = req.params;
@@ -175,7 +221,11 @@ app.put("/api/reviews/:id", (req, res) => {
     }
   });
 });
+```
 
+## `DELETE`
+
+```bash
 // Delete a review
 app.delete("/api/reviews/:id", (req, res) => {
   const { id } = req.params;
@@ -192,8 +242,14 @@ app.delete("/api/reviews/:id", (req, res) => {
   });
 });
 
-/* WATCHLIST TABLE */
 
+```
+
+## Watchlist
+
+## `GET`
+
+```bash
 // Get all watchlist
 app.get("/api/watchlist", (req, res) => {
   const sql = "SELECT * FROM watchlist";
@@ -208,6 +264,60 @@ app.get("/api/watchlist", (req, res) => {
     }
   });
 });
+
+```
+
+```bash
+// Watchlist full table
+app.get("/api/fullWatchlistTable", (req, res) => {
+  const sql =
+  `SELECT *
+  FROM watchlist
+  JOIN movies ON movies.movie_id = watchlist.movie_id
+  JOIN users ON users.user_id = watchlist.user_id`;
+  db.all(sql, [], (err, rows) => {
+    if (err) {
+      res
+        .status(500)
+        .json({ error: "Error retrieving watchlist from database." });
+    } else {
+      res.set("Content-Type", "application/json"); // Set the Content-Type header
+      res.json(rows);
+    }
+  });
+});
+
+```
+
+```bash
+// Watchlist table for a user specific to watched or want to watch
+app.get("/api/fullUserWatchlistTableWatched/:id", (req, res) => {
+  const { id } = req.params;
+  const { watched } = req.query;
+
+  const sql =
+  `SELECT *
+  FROM watchlist
+  JOIN movies ON movies.movie_id = watchlist.movie_id
+  JOIN users ON users.user_id = watchlist.user_id
+  WHERE watchlist.watched = ? AND watchlist.user_id = ?`;
+  db.all(sql, [watched, id], (err, rows) => {
+    if (err) {
+      console.log(res)
+      res
+        .status(500)
+        .json({ error: "Error retrieving users watchlist from database." });
+    } else {
+      res.set("Content-Type", "application/json"); // Set the Content-Type header
+      res.json(rows);
+    }
+  });
+});
+```
+
+## `POST`
+
+```bash
 
 // Add a new watchlist item
 app.post("/api/watchlist", (req, res) => {
@@ -229,6 +339,11 @@ app.post("/api/watchlist", (req, res) => {
   });
 });
 
+```
+
+## `PUT`
+
+```bash
 // Update a watchlist item
 app.put("/api/watchlist/:id", (req, res) => {
   const { id } = req.params;
@@ -246,6 +361,11 @@ app.put("/api/watchlist/:id", (req, res) => {
   });
 });
 
+```
+
+## `DELETE`
+
+```bash
 // Delete a watchlist item
 app.delete('/api/watchlist/:id', (req, res) => {
   const { id } = req.params;
@@ -260,98 +380,4 @@ app.delete('/api/watchlist/:id', (req, res) => {
     }
   });
 });
-
-// Reviews full table
-app.get("/api/fullReviewTable", (req, res) => {
-  const sql = 
-  `SELECT * 
-  FROM reviews 
-  JOIN movies ON movies.movie_id = reviews.movie_id 
-  JOIN users ON users.user_id = reviews.user_id
-  WHERE reviews.user_id != 1
-  ORDER BY reviews.review_id DESC`;
-  db.all(sql, [], (err, rows) => {
-    if (err) {
-      res
-        .status(500)
-        .json({ error: "Error retrieving reviews from database." });
-    } else {
-      res.set("Content-Type", "application/json"); // Set the Content-Type header
-      res.json(rows);
-    }
-  });
-});
-
-
-// Watchlist full table
-app.get("/api/fullWatchlistTable", (req, res) => {
-  const sql = 
-  `SELECT * 
-  FROM watchlist 
-  JOIN movies ON movies.movie_id = watchlist.movie_id 
-  JOIN users ON users.user_id = watchlist.user_id`;
-  db.all(sql, [], (err, rows) => {
-    if (err) {
-      res
-        .status(500)
-        .json({ error: "Error retrieving watchlist from database." });
-    } else {
-      res.set("Content-Type", "application/json"); // Set the Content-Type header
-      res.json(rows);
-    }
-  });
-});
-
-
-// Watchlist table for a user specific 
-app.get("/api/newWatchlist/:id", (req, res) => {
-  const { id } = req.params;
-
-  const sql = 
-  `SELECT *
-  FROM movies
-  WHERE movie_id NOT IN (
-      SELECT movie_id
-      FROM watchlist
-      WHERE user_id = ?)`;
-  db.all(sql, [id], (err, rows) => {
-    if (err) {
-      res
-        .status(500)
-        .json({ error: "Error retrieving users watchlist from database." });
-    } else {
-      res.set("Content-Type", "application/json"); // Set the Content-Type header
-      res.json(rows);
-    }
-  });
-});
-
-// Watchlist table for a user specific to watched or want to watch
-app.get("/api/fullUserWatchlistTableWatched/:id", (req, res) => {
-  const { id } = req.params;
-  const { watched } = req.query;
-
-  const sql = 
-  `SELECT * 
-  FROM watchlist 
-  JOIN movies ON movies.movie_id = watchlist.movie_id 
-  JOIN users ON users.user_id = watchlist.user_id
-  WHERE watchlist.watched = ? AND watchlist.user_id = ?`;
-  db.all(sql, [watched, id], (err, rows) => {
-    if (err) {
-      console.log(res)
-      res
-        .status(500)
-        .json({ error: "Error retrieving users watchlist from database." });
-    } else {
-      res.set("Content-Type", "application/json"); // Set the Content-Type header
-      res.json(rows);
-    }
-  });
-});
-
-
-
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}.`);
-});
+```
