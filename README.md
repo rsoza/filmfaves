@@ -24,7 +24,7 @@ Run database simutaneously
 ```
 
 ## Youtube
-Watch a demo of website:
+Watch a demo of project:
 https://www.youtube.com/watch?v=cukURQP1rI4
 
 ## Author
