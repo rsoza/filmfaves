@@ -1,6 +1,7 @@
 # Database Description
 
-This database is designed to store information about users, movies, reviews and watchlists. It includes four tables: users, movies, reviews, and watchlist
+This database is designed to store information about users, movies, reviews and watchlists. It includes four tables: users, movies, reviews, and watchlist.
+
 
 
 ## Tables

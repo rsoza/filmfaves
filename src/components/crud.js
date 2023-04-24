@@ -69,7 +69,33 @@ app.post("/api/users", (req, res) => {
   });
 });
 
+// Update a user
+app.put("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+  const { firstname, lastname, location } = req.body;
+  const sql =
+    "UPDATE users SET firstname = ?, lastname = ?, location = ? WHERE user_id = ?";
+  db.run(sql, [firstname, lastname, location, id], (err) => {
+    if (err) {
+      res.status(500).json({ error: "Error updating user in database." });
+    } else {
+      res.json({ message: "User updated successfully." });
+    }
+  });
+});
 
+// Delete a user
+app.delete("/api/users/:id", (req, res) => {
+  const { id } = req.params;
+  const sql = "DELETE FROM users WHERE user_id = ?";
+  db.run(sql, [id], (err) => {
+    if (err) {
+      res.status(500).json({ error: "Error deleting user from database." });
+    } else {
+      res.json({ message: "User deleted successfully." });
+    }
+  });
+});
 
 /* MOVIES TABLE */
 
@@ -85,6 +111,60 @@ app.get("/api/movies", (req, res) => {
   });
 });
 
+// Add a new movie
+app.post("/api/movies", (req, res) => {
+  const [title, release_year, genre, director, star_actors] = req.body;
+  if (!title || !release_year || !genre || !director || !star_actors) {
+    res
+      .status(400)
+      .json({
+        error:
+          "Title, release year, genre, director, and star actors are required.",
+      });
+    return;
+  }
+  const sql =
+    "INSERT INTO movies (title, release_year, genre, director, star_actors) VALUES (?, ?, ?, ?, ?)";
+  db.run(sql, [title, release_year, genre, director, star_actors], (err) => {
+    if (err) {
+      res.status(500).json({ error: "Error adding movie to database." });
+    } else {
+      res.json({ message: "User added successfully." });
+    }
+  });
+});
+
+// Update a movie
+app.put("/api/movies/:id", (req, res) => {
+  const { id } = req.params;
+  const { title, release_year, genre, director, star_actors } = req.body;
+  const sql =
+    "UPDATE movies SET title = ?, release_year = ?, genre = ?,  director = ?, star_actors = ? WHERE user_id = ?";
+  db.run(
+    sql,
+    [title, release_year, genre, director, star_actors, id],
+    (err) => {
+      if (err) {
+        res.status(500).json({ error: "Error updating movie in database." });
+      } else {
+        res.json({ message: "User updated successfully." });
+      }
+    }
+  );
+});
+
+// Delete a movie
+app.delete("/api/movies/:id", (req, res) => {
+  const { id } = req.params;
+  const sql = "DELETE FROM movies WHERE user_id = ?";
+  db.run(sql, [id], (err) => {
+    if (err) {
+      res.status(500).json({ error: "Error deleting movie from database." });
+    } else {
+      res.json({ message: "User deleted successfully." });
+    }
+  });
+});
 
 /* REVIEWS TABLES */
 

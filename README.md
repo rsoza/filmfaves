@@ -25,6 +25,6 @@ Run database simutaneously
 
 
 
-## Authors
+## Author
 
 - [@rsoza](https://github.com/rsoza/filmfaves)
